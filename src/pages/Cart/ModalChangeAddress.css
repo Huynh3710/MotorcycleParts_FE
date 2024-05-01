@@ -1,0 +1,43 @@
+.container-modal-change-address{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-change-address{
+    position: relative;
+    width: 700px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-close-change-address{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+.btn-change-address-modal{
+    background-color: #5b61fa;
+    color: #FFF;
+    border-radius: 5px;
+    border: 1px solid #cdcdd0;
+    padding: 5px 10px;
+}
+
+.btn-change-address-modal:hover{
+    background-color: #080eba;
+}

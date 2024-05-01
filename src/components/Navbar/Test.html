@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hover Example</title>
+    <style>
+      /* Định dạng cho phần tử */
+      .element {
+        padding: 20px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="element">Hover vào đây</div>
+
+    <script>
+      // Lấy phần tử cần thao tác
+      var element = document.querySelector(".element");
+
+      // Thêm sự kiện mouseenter
+      element.addEventListener("mouseenter", function () {
+        // Log ra thông báo "Xin chào" khi hover vào
+        console.log("Xin chào");
+      });
+    </script>
+  </body>
+</html>

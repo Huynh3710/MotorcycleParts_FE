@@ -1,20 +1,55 @@
-import './App.css';
-import LoginForm from './pages/LoginForm';
-import SignupForm from './pages/SignupForm';
-import Nav from './Components/Nav';
-import HomePage from './pages/HomePage';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// import './App.css';
+// import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// import { ToastContainer } from 'react-toastify';
+// import { publicRoutes } from './routes';
+// function App() {
+//   return (
+    
+//     <BrowserRouter>
+//       <Routes>
+//         {
+//           publicRoutes.map((route, index) => {
+//             const Page = route.component;
+//             return <Route key={index} path={route.path} element={<Page />}/>
+//           })
+//         }
+//       </Routes>
+//       <ToastContainer />  
+//     </BrowserRouter>
+//   );
+// }
 
+// export default App;
+
+import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { publicRoutes, privateRoutes, adminRoutes, RoleRoute } from './routes';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/Nav' element={<Nav />} />;
-        <Route path='/login' element={<LoginForm />} />;
-        <Route path='/signup' element={<SignupForm />} />;
-        <Route path='/' element={<HomePage/>}/>
+        {
+          publicRoutes.map((route, index) => {
+            const Page = route.component;
+            return <Route key={index} path={route.path} element={<Page />}/>
+          })
+        }
+        {
+          privateRoutes.map((route, index) => {
+            const Page = route.component;
+            return <Route key={index} path={route.path} element={<RoleRoute roles={route.roles}><Page /></RoleRoute>}/>
+          })
+        }
+        {
+          adminRoutes.map((route, index) => {
+            const Page = route.component;
+            return <Route key={index} path={route.path} element={<RoleRoute roles={route.roles}><Page /></RoleRoute>}/>
+          })
+        }
       </Routes>
+      <ToastContainer />  
     </BrowserRouter>
   );
 }

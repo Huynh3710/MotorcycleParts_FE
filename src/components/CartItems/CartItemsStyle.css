@@ -1,0 +1,9 @@
+.cart-items{
+    border: 1px solid rgb(202, 202, 202);
+    border-radius: 10px;
+    padding: 10px;
+  }
+  
+  .cart-items:hover{
+    cursor: pointer;
+  }

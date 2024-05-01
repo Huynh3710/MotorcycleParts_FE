@@ -1,0 +1,36 @@
+.order-items{
+    border-bottom: 1px solid rgb(212, 210, 210);
+}
+
+.image{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.button-cancel{ 
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+    border-radius: 5px;
+    padding: 5px 5px;
+    cursor: pointer;
+}
+.button-cancel:hover{
+    color: white;
+    background-color: rgb(255, 0, 0, 0.7);
+}
+
+.button-view-order-detail{
+    background-color: white;
+    color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    padding: 5px 5px;
+    cursor: pointer;
+}
+.button-view-order-detail:hover{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+}

@@ -1,0 +1,52 @@
+.container-modal-review{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(220, 216, 216, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-review{
+    position: absolute;
+    padding: 20px;
+    width: 35vw;
+    height: 75vh;
+    background-color: rgb(240, 217, 217);
+    border-radius: 10px;
+    overflow-y: auto;
+}
+
+.close-form-review{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px 10px;
+    background-color: red;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.textarea-reviews{
+    border-radius: 5px;
+}
+
+.container-product-reviews{
+    padding: 10px;
+    border: 1px solid rgb(162, 161, 161);
+    border-radius: 5px;
+}
+
+.reviews-btn-modal{
+    padding: 5px 10px;
+    background-color: rgb(209, 209, 209);
+    border-radius: 5px;
+    border: 1px solid rgb(162, 161, 161);
+    cursor: pointer;
+}
+.reviews-btn-modal:hover{
+    background-color: rgb(162, 161, 161);
+}

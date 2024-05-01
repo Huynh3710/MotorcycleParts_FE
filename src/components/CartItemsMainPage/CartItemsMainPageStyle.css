@@ -1,0 +1,24 @@
+.image-cart-items {
+  width: 100%;
+  height: 230px;
+  border-radius: 10px;
+  margin: 0px;
+}
+.cart-items {
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 10px;
+  padding: 10px;
+}
+.cart-icon-mainpage {
+  color: #fc5939;
+}
+.cart-icon-mainpage:hover {
+  color: rgb(255, 127, 127);
+}
+.price-cart-items {
+  display: flex;
+  gap: 20%;
+}
+.price-product {
+  color: red;
+}

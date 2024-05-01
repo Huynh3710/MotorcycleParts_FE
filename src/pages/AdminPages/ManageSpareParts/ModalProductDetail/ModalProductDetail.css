@@ -1,0 +1,75 @@
+.conatainer-modal-product-detail{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(224, 223, 223, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-product-detail{
+    position: relative;
+    width: 70%;
+    height: 95%;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 0px;
+    background-color: #fff;
+}
+.close{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: red;
+    padding: 3px 7px 3px 7px;
+    border-radius: 5px;
+    color: white;
+}
+
+.modal-product-detail-left, .modal-product-detail-midle ,.modal-product-detail-right{
+    width: 30%;
+}
+.button-modal-detai{
+    position: absolute;
+    right: 50px;
+    bottom: 10px;
+}
+.edit-btn-modal-detail{
+    background-color: rgb(230, 224, 224);
+    border: 1px solid rgb(207, 205, 205);
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.edit-btn-modal-detail:hover{
+    background-color: rgb(180, 178, 178);
+}
+
+.save-btn-modal-detail{
+    background-color: rgb(76, 190, 76);
+    border: 1px solid rgb(60, 151, 60);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.save-btn-modal-detail:hover{
+    background-color: rgb(60, 151, 60);
+    color: white;
+}
+
+
+.cancle-btn-modal-detail{
+    background-color: rgb(231, 80, 75);
+    border: 1px solid rgb(234, 21, 21);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.cancle-btn-modal-detail:hover{
+    background-color: rgb(211, 46, 34);
+    color: white;
+}

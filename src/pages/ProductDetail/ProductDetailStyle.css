@@ -1,0 +1,101 @@
+.product-detail-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: rgb(240, 240, 240);
+}
+.product-detail {
+  margin-top: 70px;
+}
+.product-detail{
+  display: flex;
+  gap: 20px;
+}
+.product-detail-right, .product-detail-left{
+  border-radius: 10px;
+}
+.product-detail-left{
+  width: 70%;
+}
+.product-detail-right{
+  width: 30%;
+}
+.use-for-motor-items{
+  background-color: #fcf8ea;
+  border: 1px solid #fbeba0;
+}
+.general-description {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.product-detail-overview,.product-detail-description,.product-detail-container-evaluate{
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+.overview-reviews{
+  /* border-bottom: 1px solid rgb(185, 182, 182); */
+}
+.product-image, .product-detail-infor-container{
+  width: 50%;
+}
+.price-product-detail{
+  font-size: large;
+  text-decoration: line-through;
+  color: rgb(163, 163, 163);
+}
+.discount-price-product-detail{
+  font-size: x-large;
+  font-weight: 600;
+  color: red;
+}
+.general-description-price .d-inline{
+  font-size: large;
+  font-weight: 600;
+}
+.product-detail-description-content p, .product-detail-right-name h4{
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin: 0px;
+}
+.product-detail-right{
+  height: 340px;
+  position: sticky;
+  top: 100px;
+  background-color: white;
+}
+
+.container-reviews-infor{
+  border-top:1px solid rgb(185, 182, 182);
+  border-bottom: 1px solid rgb(185, 182, 182);
+  padding: 10px;
+  margin-bottom: 30px;
+}
+.date-reviews, .hour-reviews{
+  font-size: 13px;
+}
+
+.view-more{
+  color: blue;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+}
+
+.compact{
+  color: blue;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+}
+
+.product-similar-list{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+  /* place-items: center; */
+}
+.product-detail-container {
+  scroll-behavior: auto; /* Tắt hiệu ứng lướt mượt */
+}

@@ -1,0 +1,38 @@
+.login-form{
+  width: 30%;
+  border-radius: 20px;
+  box-shadow: 5px 5px 10px rgb(146, 146, 146);
+  background-color: #FFF;
+}
+
+.login-form-group input{
+  border-radius: 5px;
+  /* border: 1px solid rgba(146, 146, 146); */
+  /* height: 2.3em; */
+}
+
+.login-form-group label{
+  font-weight: 400;
+}
+
+.login-form-group input::placeholder{
+  font-size: 14px;
+}
+
+@media (max-width: 1140px) {
+  .login-form{
+    width: 60%;
+  }
+  .btn-login p{
+    font-size: small;
+  }
+}
+
+@media (max-width: 576px) {
+  .signup-form-fullName {
+    width: 100%;
+  }
+  .logo {
+    width: 50px;
+  }
+}

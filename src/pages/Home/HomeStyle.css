@@ -1,0 +1,38 @@
+/* home */
+@media screen and (max-width: 768px) {
+  /* ảnh mỗi danh mục phụ tùng ở trang chủ */
+  .container-home {
+    gap: 70px;
+  }
+}
+
+/* home */
+.group-parts, .part-for-motor {
+  display: grid;
+  grid-template-columns: repeat(5, 15%);
+  gap: 20px;
+  justify-content: space-around;
+}
+.container-parts-replace {
+  display: grid;
+  grid-template-columns: repeat(4, 24%);
+  /* grid-template-rows: ; */
+  gap: 20px;
+}
+
+.container-home{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: rgb(240, 240, 240);
+}
+
+.home {
+  margin-top: 70px;
+}
+.home-brand-parts,
+.home-parts-type,
+.home-part-for-motor,
+.home-replace-parts {
+  background-color: rgb(255, 255, 255);
+}

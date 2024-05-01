@@ -1,0 +1,38 @@
+.signup-form {
+  width: 30%;
+  border-radius: 20px;
+  box-shadow: 5px 5px 10px rgb(146, 146, 146);
+  background-color: #fff;
+}
+.signup-form-group input {
+  border-radius: 5px;
+  /* border: 1px solid rgba(146, 146, 146); */
+  /* height: 2.3em; */
+}
+.top-modal {
+  position: fixed;
+  top: 30%;
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
+}
+
+.signup-form-group label {
+  font-weight: 400;
+}
+.signup-form-fullName {
+  width: 47%;
+}
+@media (max-width: 1140px) {
+  .signup-form {
+    width: 60%;
+  }
+
+  .btn-signup p {
+    font-size: small;
+  }
+}
+@media (max-width: 576px) {
+  .signup-form-fullName {
+    width: 100%;
+  }
+}

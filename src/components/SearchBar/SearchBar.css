@@ -1,0 +1,15 @@
+.form-control-extra-sm {
+    height: 40px;
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+}
+
+.btn-extra-sm {
+    height: 40px;
+    padding: 0;
+    font-size: .875rem;
+    line-height: 1.5;
+    background-color: #fff;
+    /* width: 20%; */
+}

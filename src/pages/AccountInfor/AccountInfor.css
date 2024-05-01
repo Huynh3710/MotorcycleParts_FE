@@ -1,0 +1,64 @@
+.container-account-infor {
+  background-color: rgb(240, 240, 240);
+}
+
+.container-content-account-infor{
+  position: relative;
+}
+
+.account-infor-left {
+  width: 20%;
+  position: sticky;
+  top: 90px;
+  /* margin-top: 30px; */
+  height: 85vh;
+  /* min-height: 80vh;
+  height: auto; */
+  /* border: 1px solid blue; */
+}
+.account-infor-right {
+  width: 80%;
+  /* border: 1px solid red; */
+}
+
+.active {
+  background-color: rgb(227, 226, 226);
+  /* background-color: red; */
+}
+
+.account-infor,
+.btn-order {
+  /* border: 1px solid black; */
+  font-weight: 500;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.account-infor:hover,
+.btn-order:hover {
+  cursor: pointer;
+  background-color: rgb(227, 226, 226);
+}
+
+.active-order {
+  color: red;
+}
+
+
+/* css chung cho component MyOrrder, OrderItems */
+ 
+.state-order-my-order,
+.btn-order,
+/* .container-list-order, */
+.container-order-items,
+.account-infor-left {
+  background-color: #ffffff;
+}
+
+.container-order-items, .state-order-my-order, .account-infor-left{
+  border-radius: 4px;
+}
+
+.status-order{
+  color: red;
+}

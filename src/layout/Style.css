@@ -1,438 +1,163 @@
-* {
-  box-sizing: border-box;
-}
+/* prodcut detail page */
 
-.login-form,
-.signup-form {
-  width: 35%;
-  border-radius: 20px;
-  box-shadow: 5px 5px 10px rgb(146, 146, 146);
-}
-
-.login-form-group input,
-.signup-form-group input {
-  border-radius: 5px;
-  border: 1px solid rgba(146, 146, 146);
-  height: 2.3em;
-}
-
-.login-form-group label,
-.signup-form-group label {
-  font-weight: 400;
-}
-
-.login-form-group input::placeholder,
-.signup-form-group input::placeholder {
-  font-size: 14px;
-}
-
-.signup-form-fullName {
-  width: 47%;
-}
-
-@media (max-width: 1140px) {
-  .login-form,
-  .signup-form {
-    width: 60%;
-  }
-  .btn-login p,
-  .btn-signup p {
-    font-size: small;
-  }
-}
-
-@media (max-width: 576px) {
-  .signup-form-fullName {
-    width: 100%;
-  }
-  .logo {
-    width: 50px;
-  }
-}
-
-.nav-bar,
-.nav-left,
-.nav-right,
-.nav-menu-left,
-.nav-menu-right {
-  display: flex;
-}
-.nav-bar {
-  position: fixed;
-  /* border: 1px solid red; */
-  background-color: white;
-  padding: 0px 10px;
-  /* justify-content: flex-start; */
-  width: 100%;
-  z-index: 2000;
-  box-shadow: 0px 0px 10px rgb(207, 206, 206);
-  /* overflow: hidden; */
-}
-
-/* .nav-left{
-  flex-direction: flex-start;
-} */
-
-.nav-logo {
-  width: 78px;
-  height: 100%;
-  margin-right: 10px;
-}
-.logo {
-  width: 78px;
-}
-
-.nav-right {
-  justify-content: flex-end;
-  gap: 20px;
-  width: 100%;
-  margin-right: 10px;
-}
-.nav-items {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.nav-items button {
-  font-weight: 500;
-  color: black;
-  padding: 15px 10px;
-  background-color: rgba(146, 146, 146, 0);
-  border: none;
-  white-space: nowrap;
-}
-
-.nav-catalog,
-.nav-category {
-  position: relative;
-}
-.nav-catalog:hover .nav-hidden-items-catalog,
-.nav-category:hover .nav-hidden-items-category,
-.nav-catalog-items-container:hover .nav-honda,
-.nav-catalog-items-container:hover .nav-yamaha {
-  display: grid;
-}
-
-.nav-hidden-items-catalog,
-.nav-hidden-items-category,
-.nav-honda,
-.nav-yamaha {
-  position: absolute;
-  display: none;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  padding: 10px;
-  top: 54px;
-  box-shadow: 1px 1px 15px rgb(163, 163, 163);
-  border-radius: 5px;
-  background-color: white;
-}
-.nav-hidden-items-category {
-  width: 500px;
-}
-.nav-catagory-items {
-  display: flex;
-  align-items: center;
-}
-.nav-honda,
-.nav-yamaha {
-  top: 33px;
-}
-.nav-catalog-items,
-.nav-catagory-items,
-.nav-honda-items,
-.nav-yamaha-items {
-  text-decoration: none;
-  color: black;
-  padding: 10px;
-  font-weight: 500;
-}
-
-.nav-catalog-items:hover,
-.nav-catagory-items:hover,
-.nav-honda-items:hover,
-.nav-yamaha-items:hover,
-.nav-items button:hover {
-  background-color: rgb(230, 226, 226);
-  border-radius: 5px;
-  color: rgb(32, 32, 201);
-}
-
-.nav-hiden-sub-items-catalog {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-}
-.nav-catalog-items-container {
-  position: relative;
-}
-
-.nav-search {
-  width: 60%;
-}
-.nav-search button,
-#nav-search-input {
-  height: 45%;
-}
-.nav-search button {
-  background-color: rgb(223, 220, 220);
-  display: flex;
-  width: 50px;
-  align-items: center;
-  justify-content: center;
-  border: 0.5px solid black;
-}
-
-.nav-search button:hover {
-  background-color: rgb(182, 180, 180);
-  cursor: pointer;
-}
-
-#nav-search-input {
-  border-radius: 20px 0 0 20px;
-  border: 1px solid rgb(199, 197, 197);
-  padding: 0px 15px;
-  max-width: 500px;
-}
-
-#nav-search-input:focus {
-  border: 1.5px solid rgb(21, 21, 21);
-  box-shadow: none;
-}
-
-.button-search {
-  border-radius: 0 20px 20px 0;
-  outline: none;
-  border: 1px solid rgb(199, 197, 197) !important;
-}
-
-/* in navbar */
-.nav-cart:hover,
-.account {
-  cursor: pointer;
-}
-
-.account {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.show-login-register {
-  position: absolute;
-  bottom: -75px;
-  transform: translateX(-65%);
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 10px 10px 20px rgb(102, 101, 101);
-}
-
-.link-to-signup,
-.link-to-login {
-  text-decoration: none;
-  white-space: nowrap;
-  color: black;
-}
-.link-to-signup:hover,
-.link-to-login:hover {
-  color: rgb(32, 32, 201);
-}
-
-/* home page */
-
-.container-home {
+/* .product-detail-container {
   display: flex;
   flex-direction: column;
-  gap: 100px;
+  gap: 20px;
+  background-color: rgb(240, 240, 240);
 }
+.product-detail {
+  margin-top: 70px;
+} */
 
-.home-brand-parts,
-.home-motor-type,
-.home-part-for-motor,
-.home-replace-parts {
-  background-color: rgb(255, 255, 255);
-}
 
-.image-brand {
+/* brand parts */
+/* .image-brand {
   width: 200px;
 }
 .image-brand.nav-cart:hover {
   cursor: pointer;
-}
+} */
 
-.carousel-control-prev,
+/* SldieShow type */
+/* .carousel-control-prev,
 .carousel-control-next {
   width: 10%;
-}
+} */
 
-.react-multiple-carousel__arrow--right {
+/* brand-parts */
+/* .react-multiple-carousel__arrow--right {
   right: calc(3% + 1px) !important;
 }
 .react-multiple-carousel__arrow--left {
   left: calc(1% + 1px) !important;
-}
+} */
 
 
-/* reponsive nav */
-@media screen and (max-width: 768px) {
-  .nav-items button {
-    font-size: small;
-  }
-   /* logo ở thanh nav */
-  .logo {
-    width: 50px;
-  }
-
-  #nav-search-input::placeholder,
-  .link-to-signup h6,
-  .link-to-login h6 {
-    font-size: 14px;
-  }
-  .nav-catalog-items,.nav-catagory-items,.nav-honda-items,.nav-yamaha-items {
-    font-size: small;
-  }
-  /* ảnh mỗi danh mục phụ tùng ở trang chủ */
-  .image-brand {
-    width: 100px;
-  }
-  .container-home{
-    gap: 70px;
-  }
-}
-
-@media screen and (min-width: 576px) and (max-width: 768px) {
-  .nav-items button {
-    font-size: 10px;
-  }
-  .search-icon{
-    font-size: 13px;
-  }
-  .nav-items button {
-    white-space: wrap;
-  }
-  .icon-user-cart{
-    width: 18px;
-  }
-}
 
 
-/* responsive in mobile nav */
-@media screen and (max-width:575px){
-  .nav-left{
-    display: none;
-  }
-  .nav-right{
-    display: none;
-  }
-  .nav-in-mobile, .header-toggle{
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 5px;
-    z-index: 5000;
-  }
-
-  .nav-bar{
-    padding: 0px;
-  }
-  .logo-mobi{
-    width: 60px;
-  }
-  .nav-search-mobi{
-    width: 65%;
-  }
-  .nav-search-mobi input{
-    border: 1px solid rgb(199, 197, 197);
-    border-radius: 10px 0px 0px 10px;
-    width: 80%;
-    /* justify-content: flex-end; */
-  }
-  .btn-search-mobi{
-    font-size: 16px;
-    border: 1px solid rgb(199, 197, 197);
-    border-radius: 0 10px 10px 0;
-    width: 20%;
-  }
-  .btn-toggle{
-    background-color: white;
-    border: 1px solid rgb(213, 212, 212);
-    border-radius: 8px;
-  } 
-  .show-toggle{
-    position: absolute;;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    /* height: 100px; */
-    background-color: white;
-    transition: all 0.5s ease-in-out; 
-    transform: translateY(-100%);
-  }
-  .nav-mobi-brand-parts-container{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    
-  }
-  .nav-mobi-type-parts-container{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-   
-  }
-  .nav-mobi-brand-parts h6, .nav-mobi-type-parts h6{
-    background-color: rgb(215, 215, 215);
-    border-radius: 5px;
-    padding: 5px 0 5px 0;
-  }
-
-}
-
-@media screen and (max-width: 291px) {
-  .icon-search-mobi{
-    width: 14px;
-  }
-  .nav-search-mobi input{
-    width: 70%;
-  }
-  .btn-search-mobi{
-    width: 30%;
-  }
-}
-
-@media screen and (min-width: 576px){
-  .nav-in-mobile{
-    display: none;
-  }
-
-}
 
 
-.container-home {
-  background-color: rgb(240, 240, 240);
-}
 
-.container-image-group-parts {
+
+
+
+
+/* CartItemsGroupParts */
+/* .container-image-group-parts {
   transition: all 0.5s ease-in-out;
 }
-
+.image-group-parts{
+  width: 100%;
+  height: 110px;
+}
 .group-parts-items:hover .container-image-group-parts {
   transform: translateY(-10px);
 }
 
 .group-parts-items:hover {
   box-shadow: 5px 0px 10px rgb(177, 177, 177);
-}
-.group-parts {
-  display: grid;
-  grid-template-columns: repeat(5, 15%);
-  gap: 20px;
-  justify-content: space-around;
+  cursor: pointer;
 }
 .group-parts-items {
   padding-top: 20px;
   box-shadow: 0px 0px 10px rgb(207, 206, 206);
+} */
+
+
+
+/* CartItems */
+/* .cart-items{
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 10px;
+  padding: 10px;
 }
 
+.cart-items:hover{
+  cursor: pointer;
+} */
 
+/* CartItemsMainPage */
+/* .image-cart-items{
+  width: 100%;
+  height: 230px;
+  border-radius: 10px;
+  margin: 0px;
+}
+.cart-icon-mainpage{
+  color: #fc5939;
+}
+.cart-icon-mainpage:hover{
+  color: rgb(255, 127, 127);
+}
+.price-cart-items{
+  display: flex;
+  gap: 20%;
+}
+.price-product{
+  color: red;
+} */
+
+
+/* ProductDetail */
+/* .product-detail{
+  display: flex;
+  gap: 20px;
+}
+.product-detail-right, .product-detail-left{
+  border-radius: 10px;
+}
+.product-detail-left{
+  width: 70%;
+}
+.product-detail-right{
+  width: 30%;
+}
+.use-for-motor-items{
+  background-color: #fcf8ea;
+  border: 1px solid #fbeba0;
+}
+.general-description {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+.product-detail-overview,.product-detail-description,.product-detail-container-evaluate{
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+.product-image, .product-detail-infor-container{
+  width: 50%;
+}
+.price-product-detail{
+  font-size: large;
+  text-decoration: line-through;
+  color: rgb(163, 163, 163);
+}
+.discount-price-product-detail{
+  font-size: x-large;
+  font-weight: 600;
+  color: red;
+}
+.general-description-price .d-inline{
+  font-size: large;
+  font-weight: 600;
+}
+.product-detail-description-content p, .product-detail-right-name h4{
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin: 0px;
+}
+.product-detail-right{
+  height: 340px;
+  position: sticky;
+  top: 100px;
+  background-color: white;
+} */
+
+
+/* QuanlityInput */
+/* .quan-border{
+  border: 1px solid rgb(202, 202, 202);
+} */

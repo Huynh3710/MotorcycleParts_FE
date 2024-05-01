@@ -1,0 +1,12 @@
+.image-brand {
+  width: 200px;
+}
+.image-brand {
+  cursor: pointer;
+}
+.react-multiple-carousel__arrow--right {
+  right: calc(3% + 1px) !important;
+}
+.react-multiple-carousel__arrow--left {
+  left: calc(1% + 1px) !important;
+}
