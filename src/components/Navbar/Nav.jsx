@@ -7,7 +7,7 @@ import { routeImageCustomer } from "../../api/apiGetImage";
 import { FaSearch } from "react-icons/fa";
 import { FaUser, FaCartShopping } from "react-icons/fa6";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 const Nav = () => {
   const { handleLogout } = useContext(AuthContext);
@@ -17,6 +17,9 @@ const Nav = () => {
   const { allBrandMotor } = useGetAllBrandMotor();
   const [currentId, setCurrentId] = useState(null);
   const [avatar, setAvatar] = useState(null);
+  const { setIsLoading } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const getNameUser = async () => {
@@ -65,6 +68,11 @@ const Nav = () => {
     setIsShow(!isShow);
   };
 
+  const handleSearch = () =>{
+    setIsLoading(true); 
+    navigate(`/product?type=search&sname=${search}`);
+  }
+
   const handleCatalogLeave = () => {
     setIsShow(false);
   };
@@ -87,6 +95,12 @@ const Nav = () => {
     console.log(brandId);
   };
 
+  const getSparePartByMotorTypeIdNav = (motorTypeId) => {
+    navigate(`/product?type=part-type&typeMotorId=${motorTypeId}`);
+  }
+  const handleProductByType = (typeId) => {
+    navigate(`/product?type=part-type&typePartId=${typeId}`);
+  }
   return (
     <div className="wapper">
       <div className="nav-bar">
@@ -108,7 +122,7 @@ const Nav = () => {
               </Link>
             </div>
             <div className="nav-items">
-              <Link to="/s" className="text-decoration-none">
+              <Link to={"/product"} className="text-decoration-none">
                 <button>Sản Phẩm</button>
               </Link>
             </div>
@@ -152,12 +166,13 @@ const Nav = () => {
                             {filteredData &&
                               filteredData.map((element, index) => {
                                 return (
-                                  <Link
+                                  <div
                                     key={index}
                                     className="dropdown-right-items p-2"
+                                    onClick={()=>{getSparePartByMotorTypeIdNav(element.id)}}
                                   >
                                     {element.name}
-                                  </Link>
+                                  </div>
                                 );
                               })}
                           </div>
@@ -174,9 +189,9 @@ const Nav = () => {
                 {SparePartsType &&
                   SparePartsType.map((element, index) => {
                     return (
-                      <Link key={index} className="nav-catagory-items">
+                      <div key={index} className="nav-catagory-items" onClick={()=>{handleProductByType(element.id)}}>
                         {element.name}
-                      </Link>
+                      </div>
                     );
                   })}
               </div>
@@ -190,9 +205,11 @@ const Nav = () => {
               id="nav-search-input"
               className="form-control"
               placeholder="Tìm kiếm..."
+              value={search} // Đặt giá trị của input bằng state search
+              onChange={e => setSearch(e.target.value)} // Cập nhật state search khi giá trị input thay đổi
             />
-            <button className="button-search">
-              <FaSearch className="search-icon" />
+            <button className="button-search" onClick={handleSearch}>
+              <FaSearch className="search-icon"/>
             </button>
           </div>
           <div className="nav-menu-right d-flex align-items-center gap-3 gap-lg-4">

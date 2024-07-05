@@ -4,7 +4,7 @@ import { Modal, Button } from "react-bootstrap";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const ModalAddDiscount = ({ onClose }) => {
+const ModalAddDiscount = ({ onClose, reload }) => {
   //   const [name, setName] = useState("");
   //   const [value, setValue] = useState("");
   const [message, setMessage] = useState("");
@@ -53,7 +53,6 @@ const ModalAddDiscount = ({ onClose }) => {
   };
 
   const handleChange = (e) => {
-    
     setData({
       ...data,
       [e.target.name]: e.target.value,
@@ -83,6 +82,7 @@ const ModalAddDiscount = ({ onClose }) => {
       setFailureModal(true);
       console.error("Lỗi:", error);
     }
+    reload(prev => !prev);
   };
 
   return (

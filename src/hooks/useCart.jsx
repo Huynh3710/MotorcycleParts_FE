@@ -3,7 +3,7 @@ import axios from "axios";
 // import Cart from "../pages/Cart/Cart";
 
 const useAddToCart = (CartItems) => {
-  console.log(CartItems);
+  // console.log(CartItems);
   const cartId = localStorage.getItem("cartId");
   //gửi về server
   const [cart, setCart] = useState({});
@@ -14,14 +14,14 @@ const useAddToCart = (CartItems) => {
       ? CartItems.unitPrice -
         CartItems.unitPrice * (CartItems.discount.discount / 100)
       : CartItems.unitPrice;
-
+    console.log("price: " + price);
     const tempCart = {
       cartId: parseInt(cartId),
       sparePartId: CartItems.id,
       quantity: quanlity,
       price: price,
     };
-    // console.log(tempCart);
+
     setCart(tempCart);
     console.log(tempCart);
     try {

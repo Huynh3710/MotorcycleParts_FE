@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Table } from "react-bootstrap";
+import { Button, Modal, Table } from "react-bootstrap";
 import SearchBar from "../../../components/SearchBar/SearchBar";
 import ModalAddDiscount from "./ModalAddDiscount";
 import ModalDiscountDetail from "./ModalDiscountDetail";
@@ -12,6 +12,9 @@ const ManageDiscount = () => {
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
+  const [reaload, setReload] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [idDelete, setIdDelete] = useState(null);
 
   useEffect(() => {
     const fetchDiscounts = async () => {
@@ -27,7 +30,7 @@ const ManageDiscount = () => {
       }
     };
     fetchDiscounts();
-  }, []);
+  }, [reaload]);
 
   const handleModalShow = () => {
     setShowModal(true);
@@ -43,9 +46,38 @@ const ManageDiscount = () => {
     setShowModalDetail(true);
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/get-api/delete-discount/${id}`
+      );
+      if (response.data) {
+        setReload(!reaload);
+      }
+      // alert("Xóa thành công");
+    } catch (error) {
+      console.error("Lỗi:", error);
+    }
+  };
+  const showDelete = (id) => {
+    setIdDelete(id);
+    setConfirmDelete(true);
+  }
+  const handleCloseDeleteModal = () => {
+    setConfirmDelete(false);
+  };
+
+  const handleConfirmDelete = () => {
+    handleDelete(idDelete);
+    handleCloseDeleteModal();
+  };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentDiscounts = allDiscounts.slice(indexOfFirstItem, indexOfLastItem);
+  const currentDiscounts = allDiscounts.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
   const changePage = (newPage) => {
     setCurrentPage(newPage);
@@ -68,6 +100,8 @@ const ManageDiscount = () => {
     return pageNumbers;
   };
 
+  
+
   return (
     <div>
       <h3 className="pb-3 header-manage-discount mb-3">Quản Lý Khuyến Mãi</h3>
@@ -79,6 +113,8 @@ const ManageDiscount = () => {
           <SearchBar
             sizeButton={20}
             placeholder={"Tìm kiếm khuyến mãi theo tên"}
+            type={"discount"}
+            setDiscounts={setAllDiscounts}
           />
         </div>
       </div>
@@ -92,14 +128,14 @@ const ManageDiscount = () => {
             <th>Ngày bắt đầu</th>
             <th>Ngày kết thúc</th>
             <th>Giá Trị</th>
-            <th>Action</th>
+            <th className="text-center">Action</th>
           </tr>
         </thead>
         <tbody>
           {currentDiscounts.map((discount) => (
             <tr key={discount?.id}>
               <td>{discount?.id}</td>
-              <td style={{width: "250px"}}>{discount?.name}</td>
+              <td style={{ width: "250px" }}>{discount?.name}</td>
               <td>{discount?.code}</td>
               <td>{discount?.description}</td>
               {/* <td>{discount?.startDate}</td> */}
@@ -107,24 +143,68 @@ const ManageDiscount = () => {
               <td>{`${discount?.endDate[2]}/${discount?.endDate[1]}/${discount?.endDate[0]} ${discount?.endDate[3]}:${discount?.endDate[4]}`}</td>
 
               <td>{discount?.discount}</td>
-              <td>
-                <button className="btn btn-outline-secondary" onClick={() => handleShowDetail(discount)}>Chi tiết</button>
+              <td className="d-flex gap-3">
+                <button
+                  className="btn btn-outline-secondary"
+                  onClick={() => handleShowDetail(discount)}
+                >
+                  Chi tiết
+                </button>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => {
+                    showDelete(discount.id);
+                  }}
+                >
+                  Xóa
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </Table>
       <div className="pagination">
-        <button onClick={() => changePage(currentPage - 1)} disabled={currentPage === 1}>
+        <button
+          onClick={() => changePage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
           {"<<"}
         </button>
         {renderPageNumbers()}
-        <button onClick={() => changePage(currentPage + 1)} disabled={currentPage === Math.ceil(allDiscounts.length / itemsPerPage)}>
+        <button
+          onClick={() => changePage(currentPage + 1)}
+          disabled={
+            currentPage === Math.ceil(allDiscounts.length / itemsPerPage)
+          }
+        >
           {">>"}
         </button>
       </div>
-      {showModal && <ModalAddDiscount onClose={handleModalClose} />}
-      {showModalDetail && <ModalDiscountDetail onClose={handleModalClose} discountInfor={items} />}
+      {showModal && (
+        <ModalAddDiscount onClose={handleModalClose} reload={setReload} />
+      )}
+      {showModalDetail && (
+        <ModalDiscountDetail
+          onClose={handleModalClose}
+          discountInfor={items}
+          setItems={setItems}
+          reaload={setReload}
+        />
+      )}
+       <Modal show={confirmDelete} onHide={handleCloseDeleteModal}>
+        <Modal.Header closeButton>
+          <Modal.Title style={{color: 'red'}}>Xóa khuyến mãi</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Bạn xác nhận muốn xóa khuyến mãi?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDeleteModal}>
+            Đóng
+          </Button>
+          <Button variant="primary" onClick={handleConfirmDelete}>
+            Xác nhận
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

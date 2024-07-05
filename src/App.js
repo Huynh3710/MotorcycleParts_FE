@@ -1,26 +1,3 @@
-// import './App.css';
-// import { BrowserRouter, Routes, Route } from 'react-router-dom';
-// import { ToastContainer } from 'react-toastify';
-// import { publicRoutes } from './routes';
-// function App() {
-//   return (
-    
-//     <BrowserRouter>
-//       <Routes>
-//         {
-//           publicRoutes.map((route, index) => {
-//             const Page = route.component;
-//             return <Route key={index} path={route.path} element={<Page />}/>
-//           })
-//         }
-//       </Routes>
-//       <ToastContainer />  
-//     </BrowserRouter>
-//   );
-// }
-
-// export default App;
-
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';

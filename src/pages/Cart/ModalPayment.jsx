@@ -6,7 +6,13 @@ import ModalChangeAddress from "./ModalChangeAddress";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const ModalPayment = ({ onClose, selectedItems, handlePayment }) => {
+const ModalPayment = ({
+  onClose,
+  selectedItems,
+  handlePayment,
+  shippingFee,
+  total,
+}) => {
   const cartId = localStorage.getItem("cartId");
   const customerId = localStorage.getItem("customerId");
 
@@ -118,51 +124,62 @@ const ModalPayment = ({ onClose, selectedItems, handlePayment }) => {
               </div>
             </div>
           </div>
+          <div className="d-flex justify-content-between">
+            <div className="d-flex gap-2">
+              <p className="mb-1">Phí vận chuyển: </p>
+              <p>{Number(shippingFee).toLocaleString("vi-VN")}đ</p>
+            </div>
+            <div className="d-flex gap-2">
+              <p>Tổng giá: </p>
+              <p>{Number(total).toLocaleString("vi-VN")}đ</p>
+            </div>
+          </div>
+          <div className="list-item-payment">
+            {orderItems &&
+              orderItems.map((item, index) => (
+                <div key={index}>
+                  <div
+                    key={index}
+                    className="payment-item mb-3 d-flex justify-content-between align-items-center"
+                  >
+                    <div className="d-flex gap-2 align-items-center">
+                      <div className="">
+                        <img
+                          className="rounded-3"
+                          src={`${routeImage}${item?.spareParts?.id}`}
+                          alt=""
+                          style={{ width: "100px" }}
+                        />
+                      </div>
+                      <div>
+                        <p className="m-0">{item?.spareParts?.name}</p>
+                        <p className="m-0">
+                          {item?.spareParts?.discount
+                            ? Number(
+                                item.spareParts.unitPrice -
+                                  (item.spareParts.unitPrice *
+                                    item.spareParts.discount.discount) /
+                                    100
+                              ).toLocaleString("vi-VN") + "đ"
+                            : Number(
+                                item?.spareParts?.unitPrice
+                              ).toLocaleString("vi-VN") + "đ"}
+                        </p>
 
-          {orderItems &&
-            orderItems.map((item, index) => (
-              <div key={index}>
-                <div
-                  key={index}
-                  className="payment-item mb-3 d-flex justify-content-between align-items-center"
-                >
-                  <div className="d-flex gap-2 align-items-center">
+                        <p className="m-0">x{item?.quantity}</p>
+                      </div>
+                    </div>
                     <div className="">
-                      <img
-                        className="rounded-3"
-                        src={`${routeImage}${item?.spareParts?.id}`}
-                        alt=""
-                        style={{ width: "100px" }}
-                      />
+                      Giá:{" "}
+                      {Number(item?.price * item?.quantity).toLocaleString(
+                        "vi-VN"
+                      )}
+                      đ
                     </div>
-                    <div>
-                      <p className="m-0">{item?.spareParts?.name}</p>
-                      <p className="m-0">
-                        {item?.spareParts?.discount
-                          ? Number(
-                              item.spareParts.unitPrice -
-                                (item.spareParts.unitPrice *
-                                  item.spareParts.discount.discount) /
-                                  100
-                            ).toLocaleString("vi-VN") + "đ"
-                          : Number(item?.spareParts?.unitPrice).toLocaleString(
-                              "vi-VN"
-                            ) + "đ"}
-                      </p>
-
-                      <p className="m-0">x{item?.quantity}</p>
-                    </div>
-                  </div>
-                  <div className="">
-                    Giá:{" "}
-                    {Number(item?.price * item?.quantity).toLocaleString(
-                      "vi-VN"
-                    )}
-                    đ
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+          </div>
         </div>
         <div className="d-flex justify-content-end">
           <button className="checkout-btn-in-mmodal" onClick={handlePayment}>

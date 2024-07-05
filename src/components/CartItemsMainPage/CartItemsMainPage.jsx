@@ -15,23 +15,28 @@ const CartItemsMainPage = ({
   // console.log(CartItems.id);
   const navigate = useNavigate();
   const { addToCart } = useCart(CartItems);
-
+  console.log(CartItems?.status);
   const hanldeProductDetail = () => {
     navigate("/product-detail", { state: { sparePartsId: CartItems.id } });
+    // alert(CartItems.id);
+    // navigate(`/product-detail/${CartItems.id}`);
+    // navigate(`/product-detail/${CartItems.id}`, { replace: true });
   };
 
   const handleCartClick = (event) => {
     event.stopPropagation();
   };
   const handleAddToCart = (event) => {
-    if (localStorage.getItem("customerId")) {
+    if (
+      localStorage.getItem("customerId") &&
+      CartItems?.status === "Còn hàng"
+    ) {
       event.stopPropagation();
-      // addToCart(CartItems.id);
       addToCart(1);
-      // alert("Thêm vào giỏ hàng thành công");
       toast.success("Thêm vào giỏ hàng thành công");
+    } else if (CartItems?.status === "Hết hàng") {
+      toast.error("Sản phẩm đã hết hàng");
     } else {
-      // alert("Vui lòng đăng nhập để thêm vào giỏ hàng");
       toast.error("Vui lòng đăng nhập để thêm vào giỏ hàng");
     }
   };
@@ -72,13 +77,16 @@ const CartItemsMainPage = ({
             onClick={handleCartClick}
           >
             {/* <Link to={"/cart"}><FaCartPlus size={"35px"} className="cart-icon-mainpage"/></Link> */}
-            <div
+            <button
               className="btn-add-carts-items d-flex justify-content-center align-items-center"
               onClick={handleAddToCart}
+              style={{ border: "none", background: "none" }}
+              // disabled={CartItems?.status === "Còn hàng" ? true : false}
+              // disabled= {false}
             >
               <FaCartPlus size={"35px"} className="cart-icon-mainpage" />
               {/* <ToastContainer /> */}
-            </div>
+            </button>
           </div>
         </div>
       </div>

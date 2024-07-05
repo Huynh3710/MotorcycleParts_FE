@@ -67,3 +67,15 @@
     border: 1px solid rgb(154, 153, 153);
     border-radius: 5px;
 }
+.table-fixed {
+  table-layout: fixed;
+}
+
+.table-fixed th,
+.table-fixed td {
+  width: 100px; /* Đặt chiều rộng cố định cho mỗi cột */
+  overflow: hidden;
+  white-space: nowrap; /* Ngăn ngừa text bị wrap khi quá dài */
+  text-overflow: ellipsis; /* Hiển thị dấu "..." khi text quá dài */
+}
+

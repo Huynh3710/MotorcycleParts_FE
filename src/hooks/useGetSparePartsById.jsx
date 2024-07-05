@@ -15,7 +15,7 @@ const useGetSparePartsById = (sparePartsId) => {
       }
     };
     fetchData();
-  }, []);   
+  }, [sparePartsId]);   
   return {sparePartsById};
 };
 

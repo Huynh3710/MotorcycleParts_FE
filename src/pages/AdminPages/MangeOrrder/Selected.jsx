@@ -5,6 +5,8 @@ import useGetOrder from "../../../hooks/useGetOrder";
 import ModalConfirmState from "../../../components/ModalOrderDetailAdmin/ModalConfirmState";
 import ModalConfirmDelete from "../../../components/ModalOrderDetailAdmin/ModalConfirmDelete";
 import ModalOrderDetail from "../../../components/ModalOrderDetailAdmin/ModalOrderDetailAdmin";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 const statusOptions = [
   "PENDING",
   "CAPTURED",
@@ -12,6 +14,7 @@ const statusOptions = [
   "SHIPMENT",
   "DELIVERED",
   "CANCELLED",
+  "REFUNDED",
 ];
 
 const statusOptionsName = [
@@ -21,10 +24,10 @@ const statusOptionsName = [
   "Đang vận chuyển",
   "Đã Giao",
   "Đã Hủy",
+  "Đã Hoàn Tiền",
 ];
 
 const Selected = ({ item, index }) => {
-  
   const [status, setStatus] = useState(item?.orderStatus?.status);
 
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -36,7 +39,7 @@ const Selected = ({ item, index }) => {
 
   const { getUserNameById } = useGetOrder();
 
-  console.log(status);
+  console.log(item);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,15 +87,26 @@ const Selected = ({ item, index }) => {
               console.error("Lỗi khi thay đổi trạng thái:", error);
             });
           break;
-        case "CANCELLED":
-          // console.log("Nhận hủy");
+        case "REFUNDED":
           break;
         default:
-        // console.log("Chờ Xác Nhận");
       }
     }
     setStatus(newStatus);
     setShowConfirmModal(false);
+  };
+
+  const refunded = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/api/v1/user-payment/orders/${item.captureId}/REFUNDED`
+      );
+      toast.success("Hoàn tiền thành công");
+      console.log(response.data);
+      setStatus("REFUNDED"); // Cập nhật trạng thái sau khi hoàn tiền thành công
+    } catch (error) {
+      console.error("Lỗi khi hoàn tiền:", error);
+    }
   };
 
   const handleDeleteOrder = () => {
@@ -102,30 +116,20 @@ const Selected = ({ item, index }) => {
       )
       .then(() => {
         setShowDeleteModal(false);
-        // Xử lý logic sau khi xóa đơn hàng ở đây
       })
       .catch((error) => {
         console.error("Lỗi khi xóa đơn hàng:", error);
       });
   };
-
-  // const tempStatusName = statusOptionsName[statusOptions.indexOf(status)];
   const tempStatusName = statusOptionsName[statusOptions.indexOf(tempStatus)];
 
   return (
     <tr>
-      {/* <td>
-        <input
-          type="checkbox"
-          onChange={() => handleSelectOrder(item.orderCode)}
-          checked={isSelectAll}
-        />
-      </td> */}
       <td>{index + 1}</td>
       <td>{item.orderCode}</td>
       <td>{new Date(Number(item.orderDate)).toLocaleString()}</td>
       <td>{customerName}</td>
-      <td>{Number(item.amountPrice).toLocaleString('vi-VN')}đ</td>
+      <td>{Number(item.amountPrice).toLocaleString("vi-VN")}đ</td>
       <td className="d-flex">
         <div className="d-flex gap-1 justify-content-end">
           <div className="">
@@ -133,7 +137,7 @@ const Selected = ({ item, index }) => {
               className="form-select"
               aria-label="Default select example"
               onChange={handleSelectChange}
-              value={status}
+              value={"status"}
             >
               {statusOptions.map((option, index) => (
                 <option
@@ -156,6 +160,19 @@ const Selected = ({ item, index }) => {
             >
               Chi tiết
             </button>
+            {status &&
+              status !== "PENDING" &&
+              status !== "DELIVERED" &&
+              status !== "CANCELLED" &&
+              status !== "REFUNDED" && (
+                <button
+                  type="button"
+                  className="btn btn-outline-danger ms-1"
+                  onClick={refunded}
+                >
+                  Hủy Đơn
+                </button>
+              )}
           </div>
         </div>
       </td>

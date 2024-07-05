@@ -73,12 +73,14 @@ const ManageCategory = () => {
       <h3 className="pb-3 header-manage-category mb-3">Quản Lý Danh Mục</h3>
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div className="w-50">
-          <Button onClick={handleModalShow}>Thêm Danh Mục</Button>
+          <Button onClick={handleModalShow}>Thêm Hãng Phụ Tùng</Button>
         </div>
         <div className="w-50">
           <SearchBar
             sizeButton={20}
             placeholder={"Tìm kiếm danh mục theo tên"}
+            type={"brandpart"}
+            setBrandParts={setAllCategories}
           />
         </div>
       </div>

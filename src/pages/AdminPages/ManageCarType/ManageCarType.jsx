@@ -81,6 +81,8 @@ const ManageCarType = () => {
           <SearchBar
             sizeButton={20}
             placeholder={"Tìm kiếm loại xe theo tên"}
+            type={"typemotor"}
+            setMotorType={setAllCategories}
           />
         </div>
       </div>

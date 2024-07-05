@@ -51,13 +51,13 @@ const ModalAddCategory = ({ onClose }) => {
           X
         </div>
         <div className="modal-add-category-header mb-3">
-          <h3>Thêm Danh Mục</h3>
+          <h3>Thêm hãng phụ tùng</h3>
         </div>
         <div className="modal-add-category-body">
           <form onSubmit={handleFormSubmit}>
             <div className="form-group mb-3">
               <label htmlFor="name" className="mb-2">
-                Tên Danh Mục:{" "}
+                Tên hãng phụ tùng:{" "}
               </label>
               <input
                 type="text"

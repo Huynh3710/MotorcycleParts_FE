@@ -4,11 +4,11 @@ import axios from "axios";
 const MyComponent = () => {
   const [recommendations, setRecommendations] = useState([]);
   console.log(recommendations);
-  const userId = 0;
+  const userId = 202;
   useEffect(() => {
     async function fetchData() {
       const response = await axios.get(`http://127.0.0.1:5000/recommendations/${userId}`);
-      setRecommendations(response.data);
+      setRecommendations(response.data.recommendations);
     }
     fetchData();
   }, [userId]);

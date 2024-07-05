@@ -3,6 +3,7 @@ import "./Dashboard.css";
 import { MdDashboard } from "react-icons/md";
 import { BiSolidCategory } from "react-icons/bi";
 import { MdDiscount } from "react-icons/md";
+import { FaShippingFast } from "react-icons/fa";
 import {
   FaProductHunt,
   FaShoppingBag,
@@ -20,6 +21,7 @@ import ManageCarType from "../ManageCarType/ManageCarType";
 import ManageSparePartType from "../ManageSparePartType/ManageSparePartType";
 import ManageSparePartTypePic from "../../../assets/images/Remove-bg.ai_1714138096776.png"
 import ManageDiscount from "../ManageDiscount/ManageDiscount";
+import ManageShipping from "../ManageShipping/ManageShipping";
 import { IoIosLogOut } from "react-icons/io";
 import useGetOrder from "../../../hooks/useGetOrder";
 import PoXe from "../../../assets/images/SpareParts/PhuocXe.jpg";
@@ -42,6 +44,7 @@ const Dashboard = () => {
     { name: "Quản Lý Loại Phụ Tùng", icon: <img src={ManageSparePartTypePic} alt="Spare Part Type" width={size} height={size} />, component: <ManageSparePartType /> },
     { name: "Quản Lý Loại Xe", icon: <FaMotorcycle size={size}/>, component: <ManageCarType /> },
     { name: "Quản Lý Khuyến Mãi", icon: <MdDiscount size={size}/>, component: <ManageDiscount /> },
+    { name: "Quản lý phí giao hàng", icon: <FaShippingFast size={size}/>, component: <ManageShipping />},
     { name: "Quản Lý Khách Hàng", icon: <FaUserFriends size={size}/>, component: <ManageCustomer /> },
     { name: "Đăng xuất",icon: <IoIosLogOut size={size}/>}
   ];
@@ -97,14 +100,14 @@ const Dashboard = () => {
       <div className="admin-dashboard-right">
         <div className="header-admin p-4 d-flex">
           <h5>Spare Parts Shop</h5>
-          <div className="imgae-admin">
+          {/* <div className="imgae-admin">
             <img className="me-2" style={{
               width: "40px",
               height: "40px",
               borderRadius: "50%",            
             }} src={PoXe} alt="" />
             <span>name</span>
-          </div>
+          </div> */}
         </div>
         <div className="component-change ps-4 ">{currentComponent}</div>
       </div>

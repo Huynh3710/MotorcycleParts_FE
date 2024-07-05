@@ -7,7 +7,7 @@ const useReview = () => {
                 `http://localhost:8080/get-api/by-sparePartsId/${sparePartId}`
             );
             
-            return response.data;
+            return response?.data.reverse();
         } catch (error) {
             console.log(error);
         }

@@ -6,6 +6,7 @@ import {routeImageBrandParts} from "../../api/apiGetImage";
 
 import "./BrandPartsStyle.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const BrandParts = () => {
 
   const [brandParts, setBrandParts] = useState([]);
@@ -64,6 +65,12 @@ const BrandParts = () => {
     },
   };
 
+  const navigate = useNavigate();
+
+  const handleProductByBrand = (brandId) => {
+    navigate(`/product?type=brand&brandId=${brandId}`);
+  };
+
   return (
     <div className="ps-3">
       <Carousel
@@ -92,6 +99,7 @@ const BrandParts = () => {
             <div
               key={index}
               className="container-brand d-flex align-items-center "
+              onClick={() => handleProductByBrand(e.id)} // Gọi hàm với ID thương hiệu
             >
               <img className="image-brand rounded-3 ms-3" src={`${routeImageBrandParts}${e.id}`} alt="" style={{height: "100px"}}/>
             </div>

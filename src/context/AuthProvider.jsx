@@ -6,7 +6,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [cartItemsIdCheckouts, setCartItemsIdCheckouts] = useState([]);
   // console.log(cartItemsIdCheckouts);
   const handleLogout = async () => {
@@ -49,6 +49,8 @@ export const AuthProvider = ({ children }) => {
         handleLogout,
         cartItemsIdCheckouts,
         setCartItemsIdCheckouts,
+        setIsLoading,
+        isLoading
       }}
     >
       {children}

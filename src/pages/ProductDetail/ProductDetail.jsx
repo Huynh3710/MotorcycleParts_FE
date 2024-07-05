@@ -5,7 +5,7 @@ import { StartRating } from "../../components/StartRating/StartRating";
 import QualityInput from "../../components/QualityInput/QualityInput";
 import CartItemsMainPage from "../../components/CartItemsMainPage/CartItemsMainPage";
 import useGetSparePartsById from "../../hooks/useGetSparePartsById";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import useCart from "../../hooks/useCart";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,11 +14,15 @@ import "./ProductDetailStyle.css";
 import axios from "axios";
 import { Modal, Button } from "react-bootstrap";
 import CountdownTimer from "../../components/Countdown";
+import useGetShippingRate from "../../hooks/useGetShippingRate";
 const ProductDetail = () => {
   const location = useLocation();
+  // const { sparePartsId } = location.state;
   const sparePartsId = location.state.sparePartsId;
 
+  // const sparePartsId = id;
   const { sparePartsById } = useGetSparePartsById(sparePartsId);
+
   console.log(sparePartsById);
   const { addToCart } = useCart(sparePartsById);
   const [quantity, setQuantity] = useState(1);
@@ -46,19 +50,25 @@ const ProductDetail = () => {
     setNumReviewsToShow(5);
   };
 
-
   const [timeLeft, setTimeLeft] = useState(0);
   useEffect(() => {
-    if (sparePartsById && sparePartsById.discount && sparePartsById.discount.endDate) {
-        let endDateArray = sparePartsById.discount.endDate;
-        let endDate = new Date(endDateArray[0], endDateArray[1] - 1, endDateArray[2], endDateArray[3], endDateArray[4]);
-        let endDateUnitTime = endDate.getTime();
-        setTimeLeft(endDateUnitTime);
+    if (
+      sparePartsById &&
+      sparePartsById.discount &&
+      sparePartsById.discount.endDate
+    ) {
+      let endDateArray = sparePartsById.discount.endDate;
+      let endDate = new Date(
+        endDateArray[0],
+        endDateArray[1] - 1,
+        endDateArray[2],
+        endDateArray[3],
+        endDateArray[4]
+      );
+      let endDateUnitTime = endDate.getTime();
+      setTimeLeft(endDateUnitTime);
     }
-}, [sparePartsById]);
-
-
-
+  }, [sparePartsById, sparePartsId]);
 
   const customerId = localStorage.getItem("customerId");
   const motorTypesArray = Object.values(forCar);
@@ -125,9 +135,8 @@ const ProductDetail = () => {
   }, [sparePartsById]);
 
   useEffect(() => {
-    window.scrollTo(0, 0); 
-  }, []);
-  
+    window.scrollTo(0, 0);
+  }, [sparePartsId]);
 
   const handleAddToCart = (event) => {
     if (localStorage.getItem("customerId")) {
@@ -140,6 +149,17 @@ const ProductDetail = () => {
     }
   };
   // console.log(sparePartsById);
+  // Phí ship
+  // const [shippingFee, setShippingFee] = useState(0);
+  const { shippingRate } = useGetShippingRate();
+  
+  useEffect(() => {
+    // setShippingFee(shippingRate);
+    setPayment((prevPayment) => ({
+      ...prevPayment,
+      shippingFee: shippingRate,
+    }));
+  }, [shippingRate]);
 
   const [payment, setPayment] = useState({
     customerId: localStorage.getItem("customerId"),
@@ -148,7 +168,8 @@ const ProductDetail = () => {
     orderDetailsId: [],
   });
 
-  console.log(payment);
+  // console.log(payment);
+
 
   const handlePayment = async (payment) => {
     try {
@@ -226,13 +247,13 @@ const ProductDetail = () => {
             </div>
             <div className="product-detail-infor-container py-1">
               <h4 className="product-detail-name mb-2">
-                {sparePartsById.name}
+                {sparePartsById?.name}
               </h4>
 
               <div className="total-rating d-flex justify-content-between px-2">
                 <div className="d-flex align-items-center gap-1 mb-3">
                   <div className="total-rating-start">
-                    {staticReviews?.averageRating || 0}
+                    {staticReviews ? staticReviews?.averageRating?.toFixed(1) : 0} 
                   </div>
                   <div className="start me-2">
                     <StartRating
@@ -246,7 +267,7 @@ const ProductDetail = () => {
                   } đánh giá`}</div>
                 </div>
                 <div className="total-sell">
-                  Đã bán: {sparePartsById.sellNumber}
+                  Đã bán: {sparePartsById?.sellNumber}
                 </div>
               </div>
 
@@ -278,6 +299,10 @@ const ProductDetail = () => {
                   <div>
                     <h6 className="d-inline m-0">Trọng lượng: </h6>
                     <span>{sparePartsById?.weight}Kg</span>
+                  </div>
+                  <div>
+                    <h6 className="d-inline m-0">Trạng thái:</h6>
+                    <span>{sparePartsById?.status}</span>
                   </div>
                   {sparePartsById?.voltage !== null &&
                     sparePartsById?.voltage !== 0 && (
@@ -314,7 +339,8 @@ const ProductDetail = () => {
               <div className="general-description mt-3">
                 <p className="general-description-price mb-0">
                   <span className="d-inline">Giá: </span>
-                  {sparePartsById.discount ? (
+                  {sparePartsById?.discount &&
+                  sparePartsById?.discount?.discount !== 0 ? (
                     <div className="d-inline">
                       <span className="price-product-detail me-2">
                         {Number(sparePartsById.unitPrice).toLocaleString(
@@ -334,20 +360,21 @@ const ProductDetail = () => {
                     </div>
                   ) : (
                     <span className="discount-price-product-detail">
-                      {Number(sparePartsById.unitPrice).toLocaleString("vi-VN")}
+                      {Number(sparePartsById?.unitPrice).toLocaleString("vi-VN")}
                       đ
                     </span>
                   )}
                 </p>
-                {sparePartsById.discount && (
-                  <p style={{ fontStyle: "italic" }}>
-                    Giảm ngay {sparePartsById?.discount?.discount}%{" "}
-                    <span style={{ color: "red" }}>
-                      (còn{" "}
-                      {timeLeft &&<CountdownTimer timeLeft={timeLeft} />})
-                    </span>
-                  </p>
-                )}
+                {sparePartsById?.discount &&
+                  sparePartsById?.discount?.discount !== 0 && (
+                    <p style={{ fontStyle: "italic" }}>
+                      Giảm ngay {sparePartsById?.discount?.discount}%{" "}
+                      <span style={{ color: "red" }}>
+                        (còn{" "}
+                        {timeLeft && <CountdownTimer timeLeft={timeLeft} />})
+                      </span>
+                    </p>
+                  )}
               </div>
             </div>
           </div>
@@ -365,7 +392,7 @@ const ProductDetail = () => {
             <div className="overview-reviews p-4">
               <div className="d-flex align-items-center gap-2">
                 <h4 className="total-rating-start">
-                  {staticReviews?.averageRating || 0}
+                  {staticReviews ? staticReviews?.averageRating?.toFixed(1) : 0}
                 </h4>
                 <div className="start pb-2 me-2">
                   <StartRating
@@ -537,10 +564,10 @@ const ProductDetail = () => {
           </div>
 
           <div className="d-flex flex-column gap-2">
-            <Button variant="primary" onClick={handleShow}>
+            <Button variant="primary" onClick={handleShow}  disabled={sparePartsById?.status === 'Hết hàng'}>
               Mua ngay
             </Button>
-            <button className="btn btn-primary " onClick={handleAddToCart}>
+            <button className="btn btn-primary " onClick={handleAddToCart} disabled={sparePartsById?.status === 'Hết hàng'}>
               Thêm vào giỏ
             </button>
           </div>

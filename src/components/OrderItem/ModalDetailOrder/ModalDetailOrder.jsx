@@ -1,6 +1,6 @@
 import React from "react";
 import "./ModalDetailOrder.css";
-const ModalDetailOrder = ({ handleCloseDetail, order, getImage }) => {
+const ModalDetailOrder = ({ handleCloseDetail, order, getImage, totalPrice, shippingRate  }) => {
   return (
     <div className="container-modal-detail-order">
       <div className="modal-detail-order">
@@ -29,7 +29,7 @@ const ModalDetailOrder = ({ handleCloseDetail, order, getImage }) => {
             <div className="date-order me-5">
               <h5>Ngày đặt hàng</h5>
               <p>
-                {new Date(order?.orderDate).toLocaleString(undefined, {
+                {new Date(order?.orderDate)?.toLocaleString(undefined, {
                   year: "numeric",
                   month: "2-digit",
                   day: "2-digit",
@@ -40,6 +40,17 @@ const ModalDetailOrder = ({ handleCloseDetail, order, getImage }) => {
             </div>
           </div>
           <div className="body-content">
+              <h5>Chi tiết đơn hàng</h5>
+              {/* totalprice and shipping rate */}
+                <div className="d-flex justify-content-between">
+                  <p className="total-price-modal" style={{fontSize: "18px"}}>
+                    Tổng giá: {totalPrice?.toLocaleString()} đ
+                  </p>
+                  
+                  <p className="shipping-rate-modal" style={{fontSize: "18px"}}>
+                   {shippingRate ? `Phí vận chuyển: ${shippingRate?.toLocaleString()} đ` : "Phí vận chuyển: 0đ"}
+                  </p>
+                </div>
             {order?.orderDetails.map((value, index) => {
                 return(
                 <div key={index} className="d-flex justify-content-between align-items-center mb-4  ">
@@ -59,7 +70,7 @@ const ModalDetailOrder = ({ handleCloseDetail, order, getImage }) => {
                     </div>
                     <div className="price">
                         <div className="fs-5">
-                            {value?.price.toLocaleString()} đ
+                            {value?.price?.toLocaleString()} đ
                         </div>
                     </div>
                 </div>

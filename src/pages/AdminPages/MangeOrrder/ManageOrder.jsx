@@ -58,9 +58,14 @@ const ManageOrder = () => {
 
   return (
     <div className="">
-      <h3 className="mb-4 pb-3" style={{
-        borderBottom: "1px solid black",
-      }}>Quản Lý Đơn Hàng</h3>
+      <h3
+        className="mb-4 pb-3"
+        style={{
+          borderBottom: "1px solid black",
+        }}
+      >
+        Quản Lý Đơn Hàng
+      </h3>
       <div className="d-flex w-100 justify-content-end mb-3">
         <div className="w-50">
           <div className="filter-by-state">
@@ -94,7 +99,12 @@ const ManageOrder = () => {
         </div>
         <div className="search-order w-50 d-flex align-items-end">
           <div className="w-100">
-            <SearchBar sizeButton={20} placeholder={"Tìm kiếm đơn hàng theo tên khách hàng"}/>
+            <SearchBar
+              sizeButton={20}
+              placeholder={"Tìm kiếm đơn hàng theo tên khách hàng"}
+              type={"order"}
+              setOrder={setFilteredData}
+            />
           </div>
         </div>
       </div>

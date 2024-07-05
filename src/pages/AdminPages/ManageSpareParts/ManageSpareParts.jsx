@@ -251,6 +251,8 @@ const ManageSpareParts = () => {
             <SearchBar
               sizeButton={20}
               placeholder={"Tìm kiếm sản phẩm theo tên"}
+              setListSpareParts={setListSpareParts}
+              type="sparepart"
             />
           </div>
         </div>
@@ -323,10 +325,11 @@ const ManageSpareParts = () => {
           onClose={handleCloseModal}
           item={item}
           setItem={setItem}
+          setListSpareParts={setListSpareParts}
         />
       )}
       {isShowModal === "addProduct" && (
-        <ModalAddproduct onClose={handleCloseModal} />
+        <ModalAddproduct onClose={handleCloseModal}  setListSpareParts={setListSpareParts}/>
       )}
 
       {isFilter && (

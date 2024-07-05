@@ -13,7 +13,7 @@
   gap: 20px;
   justify-content: space-around;
 }
-.container-parts-replace {
+.container-parts-replace, .propose-spare-part {
   display: grid;
   grid-template-columns: repeat(4, 24%);
   /* grid-template-rows: ; */
@@ -33,6 +33,26 @@
 .home-brand-parts,
 .home-parts-type,
 .home-part-for-motor,
-.home-replace-parts {
+.home-replace-parts,
+.container-propose-spare-part {
   background-color: rgb(255, 255, 255);
+}
+.btn-see-more{
+    background-color: #fff;
+    border: none;
+    font-size: 18px;
+    color: rgb(0, 0, 255);
+    cursor: pointer;
+    text-decoration: none;
+    padding: 5px;
+}
+
+.see-more-home:hover{
+  background-color: rgb(223, 219, 219);
+  border-radius: 10px;
+}
+.see-more-home:hover .btn-see-more{
+  background-color: rgb(223, 219, 219);
+  color: red;
+  border-radius: 10px;
 }

@@ -6,49 +6,53 @@ import useCart from "../../hooks/useCart";
 import AuthContext from "../../context/AuthProvider";
 import ModalPayment from "./ModalPayment";
 import axios from "axios";
+import useGetShippingRate from "../../hooks/useGetShippingRate";
+import Footer from "../../components/Footer/Footer";
 const Cart = () => {
   const { getAllCart } = useCart();
   const [dataCart, setDataCart] = useState([]);
   const { cartItemsIdCheckouts } = useContext(AuthContext);
   const [checkAll, setCheckAll] = useState(false);
-  //giá khi click check box hoặc tăng giảm số lượng
   const [selectedCartItem, setSelectedCartItem] = useState(0);
   const [isShow, setIsShow] = useState(false);
+
+  // Phí ship
+  const [shippingFee, setShippingFee] = useState(0);
+  const { shippingRate } = useGetShippingRate();
+
   useEffect(() => {
     const fetchData = async () => {
-      //list of orderItems
       const data = await getAllCart();
       setDataCart(data?.reverse());
-      // setDataCart(data);
     };
     fetchData();
   }, []);
 
- useEffect(() => {
-  if (checkAll) {
-    // Tính toán lại giá tạm tính khi checkbox "Chọn tất cả" được click
-    let totalPrice = 0;
-    dataCart.forEach((item) => {
-      if (item.quantity > 0) {
-        totalPrice += item.price * item.quantity;
-      }
-    });
-    setSelectedCartItem(totalPrice);
-  } else {
-    // Đặt giá tạm tính về 0 khi "Bỏ chọn tất cả"
-    setSelectedCartItem(0);
-  }
-}, [checkAll, dataCart]);
+  useEffect(() => {
+    setShippingFee(shippingRate);
+    setPayment((prevPayment) => ({
+      ...prevPayment,
+      shippingFee: shippingRate,
+    }));
+  }, [shippingRate]);
 
-
-  // console.log("cart item: "+cartItemsIdCheckouts);
-  console.log(cartItemsIdCheckouts);
-  //phí vận chuyển tính sao tính
-  const shippingFee = 0;
+  useEffect(() => {
+    if (checkAll) {
+      let totalPrice = 0;
+      dataCart?.forEach((item) => {
+        if (item.quantity > 0) {
+          totalPrice += item.price * item.quantity;
+        }
+      });
+      setSelectedCartItem(totalPrice);
+    } else {
+      setSelectedCartItem(0);
+    }
+  }, [checkAll, dataCart]);
   const total =
-    selectedCartItem - shippingFee > 0
-      ? (selectedCartItem - shippingFee).toFixed(1)
-      : selectedCartItem - shippingFee;
+    shippingFee !== undefined
+      ? (selectedCartItem + shippingFee).toFixed(2)
+      : selectedCartItem.toFixed(2);
 
   const [payment, setPayment] = useState({
     customerId: localStorage.getItem("customerId"),
@@ -56,7 +60,7 @@ const Cart = () => {
     amount: 10,
     orderDetailsId: cartItemsIdCheckouts,
   });
-
+  console.log(payment);
   useEffect(() => {
     setPayment({
       ...payment,
@@ -66,7 +70,6 @@ const Cart = () => {
 
   const handlePayment = async () => {
     try {
-      console.log(payment);
       const response = await axios.post(
         "http://localhost:8080/api/v1/user-payment/orders/create",
         payment
@@ -78,15 +81,14 @@ const Cart = () => {
     }
   };
 
-  const handleClose = ()=>{
+  const handleClose = () => {
     setIsShow(false);
-  }
+  };
 
   const handleCheckAll = () => {
     setCheckAll(!checkAll);
-    // Tính toán lại giá tạm tính khi checkbox thay đổi
     let totalPrice = 0;
-    dataCart.forEach((item) => {
+    dataCart?.forEach((item) => {
       if (item.quantity > 0) {
         totalPrice += item.price * item.quantity;
       }
@@ -102,7 +104,9 @@ const Cart = () => {
           <div className="cart-header">
             <h3 className="cart-title m-0">Shopping Cart</h3>
             <div className="cart-functions d-flex justify-content-between align-items-center p-2">
-              <button className="btn-chose-all" onClick={handleCheckAll}>Chọn Tất Cả</button>
+              <button className="btn-chose-all" onClick={handleCheckAll}>
+                Chọn Tất Cả
+              </button>
             </div>
           </div>
 
@@ -130,16 +134,28 @@ const Cart = () => {
             <div className="cart-summary-item d-flex justify-content-between mt-3">
               <span className="cart-summary-item-title ">Tạm Tính</span>
               <span className="cart-summary-item-price ">
-                {selectedCartItem && Number(selectedCartItem).toLocaleString('vi-VN')}đ
+                {selectedCartItem &&
+                  Number(selectedCartItem).toLocaleString("vi-VN")}
+                đ
               </span>
             </div>
             <div className="cart-summary-item d-flex justify-content-between">
               <span className="cart-summary-item-title ">Phí Vận Chuyển</span>
-              <span className="cart-summary-item-price ">{Number(shippingFee).toLocaleString('vi-VN')}đ</span>
+              <span className="cart-summary-item-price ">
+                {cartItemsIdCheckouts.length > 0 && shippingFee
+                  ? Number(shippingFee).toLocaleString("vi-VN")
+                  : 0}
+                đ
+              </span>
             </div>
             <div className="cart-summary-item d-flex justify-content-between mb-4">
               <span className="cart-summary-item-title ">Tổng Cộng</span>
-              <span className="cart-summary-item-price ">{Number(total).toLocaleString('vi-VN')}đ</span>
+              <span className="cart-summary-item-price ">
+                {cartItemsIdCheckouts.length > 0
+                  ? Number(total).toLocaleString("vi-VN")
+                  : 0}
+                đ
+              </span>
             </div>
             <div className="cart-summary-btn ">
               <button
@@ -153,7 +169,18 @@ const Cart = () => {
           </div>
         </div>
       </div>
-      {isShow && <ModalPayment onClose={handleClose} selectedItems={cartItemsIdCheckouts} handlePayment={handlePayment}/>}
+      {isShow && (
+        <ModalPayment
+          onClose={handleClose}
+          selectedItems={cartItemsIdCheckouts}
+          handlePayment={handlePayment}
+          total={total}
+          shippingFee={shippingFee}
+        />
+      )}
+      <div>
+      <Footer />
+      </div>
     </div>
   );
 };

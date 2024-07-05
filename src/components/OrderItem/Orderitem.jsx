@@ -4,31 +4,36 @@ import ModalDetailOrder from "./ModalDetailOrder/ModalDetailOrder";
 import "./OrderItem.css";
 import { Modal } from "react-bootstrap";
 import axios from "axios";
+import useGetShippingRate from "../../hooks/useGetShippingRate";
 const OrderItem = ({ order, getImage }) => {
   const [orderState, setOrderState] = useState(order?.orderStatus.status);
   const [isShowModal, setIsShowModal] = useState(false);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [isCancel, setIsCancel] = useState(false);
-
+  const { shippingRate } = useGetShippingRate();
   const handleReviews = () => {
     setIsShowModal(!isShowModal);
-  }
+  };
 
   const handleCancel = async () => {
     try {
-      await axios.delete(`http://localhost:8080/api/v1/user-payment/orders/${order.orderCode}/CANCELLED`).then((res) => {
-        console.log(res.data)
-      });
-      setOrderState("CANCELLED"); 
+      await axios
+        .delete(
+          `http://localhost:8080/api/v1/user-payment/orders/${order.orderCode}/CANCELLED`
+        )
+        .then((res) => {
+          console.log(res.data);
+        });
+      setOrderState("CANCELLED");
     } catch (error) {
       console.error("Lỗi khi hủy đơn hàng: ", error);
     }
     setIsCancel(false);
-  }
+  };
 
   const handleClose = () => {
     setIsCancel(false);
-  }
+  };
 
   return (
     <div className="px-2 mb-5 container-order-items">
@@ -40,7 +45,11 @@ const OrderItem = ({ order, getImage }) => {
           >
             <div className="d-flex gap-5 justify-content-between align-items-center">
               <div>
-                <img src={`${getImage}${value.spareParts.id}`} alt="" className="image" />
+                <img
+                  src={`${getImage}${value.spareParts.id}`}
+                  alt=""
+                  className="image"
+                />
               </div>
               <div>
                 <div className="name-product fs-5">
@@ -50,7 +59,7 @@ const OrderItem = ({ order, getImage }) => {
                   <i>Số lượng: </i>
                   {value?.quantity}
                 </div>
-                <div className="status-order">
+                {/* <div className="status-order">
                   {(() => {
                     switch (orderState) {
                       case "PENDING":
@@ -63,55 +72,126 @@ const OrderItem = ({ order, getImage }) => {
                         return "Đang vận chuyển";
                       case "DELIVERED":
                         return "Đã giao hàng";
-                      case "CANCELLED": 
+                      case "CANCELLED":
                         return "Đã hủy";
-                      case "RETURNED":
-                        return "Hoàn tiền";
+                      case "REFUNDED":
+                        return "Đơn hàng bị hủy do lỗi hệ thống, bạn sẽ được hoàn tiền !!!";
                       default:
-                        return "Trạng thái không xác định";
+                        return "";
+                    }
+                  })()}
+                </div> */}
+                <div className="status-order">
+                  {(() => {
+                    switch (
+                      order?.orderStatus?.status // Truy xuất trạng thái từ đối tượng order
+                    ) {
+                      case "PENDING":
+                        return "Chờ xác nhận";
+                      case "CAPTURED":
+                        return "Đã xác nhận";
+                      case "PREPARING":
+                        return "Đang chuẩn bị";
+                      case "SHIPMENT":
+                        return "Đang vận chuyển";
+                      case "DELIVERED":
+                        return "Đã giao hàng";
+                      case "CANCELLED":
+                        return "Đã hủy";
+                      case "REFUNDED":
+                        return "Đơn hàng bị hủy do lỗi hệ thống, bạn sẽ được hoàn tiền !!!";
+                      default:
+                        return "";
                     }
                   })()}
                 </div>
               </div>
             </div>
-            <div className="price fs-5">Đơn Giá: {Number(value?.price).toLocaleString('vi-VN')}đ</div>
+            <div className="price fs-5">
+              Đơn Giá: {Number(value?.price)?.toLocaleString("vi-VN")}đ
+            </div>
           </div>
         );
       })}
 
       <div className="total d-flex justify-content-end px-3 pb-3">
         <div className="w-25 ">
-          <div className="fs-5 d-flex justify-content-end">
-            Tổng giá: {Number(order?.amountPrice).toLocaleString('vi-VN')}đ
+          <div className="shipping-rate-detail-order">
+            <div className="" style={{ fontSize: "18px" }}>
+              Phí vận chuyển: {Number(shippingRate)?.toLocaleString("vi-VN")}đ
+            </div>
+          </div>
+          <div className="d-flex" style={{ fontSize: "18px" }}>
+            Tổng giá: {Number(order?.amountPrice)?.toLocaleString("vi-VN")}đ
           </div>
           <div className="mt-3 d-flex gap-2">
-            {orderState === "DELIVERED" ? (
-              <button type="button" className="btn btn-outline-primary reviews-btn w-100" onClick={handleReviews}>Đánh giá</button>
+            {order?.orderStatus?.status === "DELIVERED" ? (
+              <button
+                type="button"
+                className="btn btn-outline-primary reviews-btn w-100"
+                onClick={handleReviews}
+              >
+                Đánh giá
+              </button>
             ) : (
-              <button className="button-view-order-detail w-100" onClick={()=>{setIsShowDetail(true)}}>
+              <button
+                className="button-view-order-detail w-100"
+                onClick={() => {
+                  setIsShowDetail(true);
+                }}
+              >
                 Chi tiết
               </button>
             )}
-            {orderState === "PENDING" && (
-              <button className="button-cancel w-100" onClick={()=>{setIsCancel(true)}}>Hủy đơn</button>
+            {order?.orderStatus?.status === "PENDING" && (
+              <button
+                className="button-cancel w-100"
+                onClick={() => {
+                  setIsCancel(true);
+                }}
+              >
+                Hủy đơn
+              </button>
             )}
           </div>
         </div>
       </div>
 
-      {isShowModal && <ModalReview handleCloseReviews={handleReviews} order={order}/>}
-      {isShowDetail && <ModalDetailOrder handleCloseDetail={()=>{setIsShowDetail(false)}} order={order} getImage={getImage}/>}
+      {isShowModal && (
+        <ModalReview handleCloseReviews={handleReviews} order={order} />
+      )}
+      {isShowDetail && (
+        <ModalDetailOrder
+          handleCloseDetail={() => {
+            setIsShowDetail(false);
+          }}
+          order={order}
+          getImage={getImage}
+          totalPrice={order?.amountPrice}
+          shippingRate={shippingRate}
+        />
+      )}
 
-      <Modal show={isCancel} onHide={handleClose} style={{marginTop: "10%"}}>
+      <Modal show={isCancel} onHide={handleClose} style={{ marginTop: "10%" }}>
         <Modal.Header closeButton>
-          <Modal.Title className="" style={{color: "red"}}>Hủy đơn</Modal.Title>
+          <Modal.Title className="" style={{ color: "red" }}>
+            Hủy đơn
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>Xác nhận hủy đơn?</Modal.Body>
         <Modal.Footer>
-          <button variant="secondary" className="btn btn-secondary" onClick={handleClose}>
+          <button
+            variant="secondary"
+            className="btn btn-secondary"
+            onClick={handleClose}
+          >
             Đóng
           </button>
-          <button variant="primary" className="btn btn-danger" onClick={handleCancel}>
+          <button
+            variant="primary"
+            className="btn btn-danger"
+            onClick={handleCancel}
+          >
             Xác nhận
           </button>
         </Modal.Footer>
@@ -121,4 +201,3 @@ const OrderItem = ({ order, getImage }) => {
 };
 
 export default OrderItem;
-

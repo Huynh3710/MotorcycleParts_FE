@@ -7,7 +7,7 @@ import CreatableSelect from "react-select/creatable";
 import "react-toastify/dist/ReactToastify.css";
 import "./ModalAddproduct.css";
 
-const ModalAddproduct = ({ onClose }) => {
+const ModalAddproduct = ({ onClose,setListSpareParts }) => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -223,6 +223,7 @@ const ModalAddproduct = ({ onClose }) => {
       .post("http://localhost:8080/get-api/spares-parts-type/create", form)
       .then((response) => {
         console.log(response.data);
+        setListSpareParts((prev) => [...prev, response.data]);
         setSuccessModalIsOpen(true);
       })
       .catch((error) => {
@@ -317,7 +318,7 @@ const ModalAddproduct = ({ onClose }) => {
             <div className="mb-3 d-flex flex-column ">
               <div className="mb-3 d-flex flex-column ">
                 <label htmlFor="wattage" style={{ fontSize: "18px" }}>
-                  Công xuất {"(Đơn vị W)"}:
+                  Công suất {"(Đơn vị W)"}:
                 </label>
                 <input
                   type="number"

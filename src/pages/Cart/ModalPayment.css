@@ -58,3 +58,15 @@
 .checkout-btn-in-mmodal:hover{
     background-color: #080eba;
 }
+.list-item-payment{
+    padding: 10px;
+    border: 1px solid rgb(164, 162, 162);
+    margin-bottom: 10px;
+    height: 200px;
+    overflow-y: auto;
+    border-radius: 10px;
+}
+.payment-item{
+    border-bottom: 1px solid rgb(206, 206, 206);
+    padding-bottom: 5px;
+}

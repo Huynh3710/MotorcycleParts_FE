@@ -327,3 +327,7 @@
 
 }
 
+.dropdown-right-items, .nav-catagory-items{
+  cursor: pointer;
+}
+

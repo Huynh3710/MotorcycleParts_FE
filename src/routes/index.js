@@ -11,8 +11,10 @@ import AccountInfor from "../pages/AccountInfor/AccountInfor";
 import ManageOrder from "../pages/AdminPages/MangeOrrder/ManageOrder";
 import Dashboard from "../pages/AdminPages/Dashboard/Dashboard";    
 import SignupTest from "../pages/Signup/SignupTest";
+import ProductPage from '../pages/ProductPages/ProductPage';
+// import ProductDetail from '../pages/ProductDetail/ProductDetail';
 import Modal from "../test/Modal";
-import Test from "../test/TestAdress"
+import Test from "../test/Modal"
 
 // Component RoleRoute
 const RoleRoute = ({ roles, children }) => {
@@ -44,9 +46,11 @@ const publicRoutes = [
     {path: '/signup', component: SignupTest},
     {path: '/cart', component: Cart},
     {path: '/nav-test', component: Nav_1},
+    // {path: '/product-detail/:id', component: ProductDetail},
     {path: '/product-detail', component: ProductDetail},
     {path: '/test', component: Modal},
-    {path: '/test-adress', component: Test}
+    {path: '/test-adress', component: Test},
+    {path: '/product', component: ProductPage}
 ]
 
 // đăng nhập rồi

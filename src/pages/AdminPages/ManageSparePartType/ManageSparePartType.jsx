@@ -58,20 +58,76 @@ const ManageSparePartType = () => {
     setCurrentPage(newPage);
   };
 
+  // const renderPageNumbers = () => {
+  //   const pageNumbers = [];
+  //   const totalPage = Math.ceil(allCategories.length / itemsPerPage);
+  //   for (let i = 1; i <= totalPage; i++) {
+  //     pageNumbers.push(
+  //       <button
+  //         key={i}
+  //         onClick={() => changePage(i)}
+  //         className={currentPage === i ? "active" : ""}
+  //       >
+  //         {i}
+  //       </button>
+  //     );
+  //   }
+  //   return pageNumbers;
+  // };
   const renderPageNumbers = () => {
     const pageNumbers = [];
     const totalPage = Math.ceil(allCategories.length / itemsPerPage);
-    for (let i = 1; i <= totalPage; i++) {
+  
+    // Số lượng trang hiển thị trước và sau trang hiện tại
+    const displayPages = 1;
+    let startPage = currentPage - displayPages > 0 ? currentPage - displayPages : 1;
+    let endPage = currentPage + displayPages <= totalPage ? currentPage + displayPages : totalPage;
+
+    // Đảm bảo luôn hiển thị cùng một số lượng trang
+    if (currentPage - startPage < displayPages) {
+      endPage = Math.min(startPage + 2 * displayPages, totalPage);
+    }
+    if (endPage - currentPage < displayPages) {
+      startPage = Math.max(endPage - 2 * displayPages, 1);
+    }
+
+    // Thêm nút trang đầu tiên
+    if (startPage > 1) {
+      pageNumbers.push(
+        <button key={1} onClick={() => setCurrentPage(1)}>
+          {1}
+        </button>
+      );
+      if (startPage > 2) {
+        pageNumbers.push(<span key="start-ellipsis">...</span>);
+      }
+    }
+  
+    // Thêm các nút trang trong khoảng startPage và endPage
+    for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
         <button
           key={i}
-          onClick={() => changePage(i)}
+          onClick={() => setCurrentPage(i)}
           className={currentPage === i ? "active" : ""}
         >
           {i}
         </button>
       );
     }
+  
+    // Thêm nút trang cuối cùng
+    if (endPage < totalPage) {
+      if (endPage < totalPage - 1) {
+        pageNumbers.push(<span key="end-ellipsis">...</span>);
+      }
+      pageNumbers.push(
+        <button key={totalPage} onClick={() => setCurrentPage(totalPage)}>
+          {totalPage}
+        </button>
+      );
+    }
+  
     return pageNumbers;
   };
 
@@ -88,6 +144,8 @@ const ManageSparePartType = () => {
           <SearchBar
             sizeButton={20}
             placeholder={"Tìm kiếm loại xe theo tên"}
+            type={"typepart"}
+            setTypeParts={setAllCategories}
           />
         </div>
       </div>

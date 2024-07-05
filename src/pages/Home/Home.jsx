@@ -7,17 +7,58 @@ import useGetAllSpareParts from "../../hooks/useGetAllSpareParts";
 import CartItemsMainPage from "../../components/CartItemsMainPage/CartItemsMainPage";
 import SparePartForMotor from "../../components/SparePartForMotor/SparePartForMotor";
 import useGetAllSparePartType from "../../hooks/useGetAllSparePartType";
-
-// import "../../layout/Style.css";
 import "./HomeStyle.css";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 const HomePage = () => {
   const { allSpareParts } = useGetAllSpareParts();
-  // console.log(allSpareParts);
+  // const [recommendations, setRecommendations] = useState([]);
   //nhóm phụ tùng
   const { SparePartsType } = useGetAllSparePartType();
   const { MotorType } = useGetAllSparePartType();
-  console.log(MotorType);
-  // console.log(SparePartsType);
+  const [productRecommendations, setProductRecommendations] = useState([]);
+  const customerId = localStorage.getItem("customerId");
+  console.log(productRecommendations);
+  useEffect(() => {
+    if (!customerId) {
+      return;
+    }
+    try {
+      const getRecommendations = async () => {
+        const response = await axios.get(
+          `http://127.0.0.1:5000/recommendations/${customerId}`
+        );
+        // setRecommendations(response.data.recommendations);
+        return response.data.recommendations;
+      };
+
+      const getProductRecommendations = async (ids) => {
+        // if (ids?.length > 0) { // Kiểm tra xem danh sách có dữ liệu không
+        console.log(ids);
+        const response = await axios.get(
+          "http://localhost:8080/get-api/spare-parts/get-spare-parts-by-ids",
+          {
+            params: {
+              ids: ids?.join(","),
+            },
+          }
+        );
+        setProductRecommendations(response.data);
+        // }
+      };
+
+      const fetchData = async () => {
+        const ids = await getRecommendations(); // Chờ cho getRecommendations hoàn thành
+        await getProductRecommendations(ids); // Sau đó mới gọi getProductRecommendations
+      };
+
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [customerId]);
+
   return (
     <div className="container-home">
       <div className="container-nav">
@@ -56,16 +97,37 @@ const HomePage = () => {
         <div className="home-replace-parts mt-2 mt-sm-4 px-sm-4 py-sm-3 rounded-3">
           <h3 className="title mb-4">Phụ tùng thay thế</h3>
           <div className="container-parts-replace mx-4">
-            {/* phụ tùng thay thế */}
             {allSpareParts &&
-              allSpareParts.slice(0, 8).map((e, index) => {
-                return <CartItemsMainPage CartItems={e} key={index} />;
-              })}
+              allSpareParts
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 8)
+                .map((e, index) => {
+                  return <CartItemsMainPage CartItems={e} key={index} />;
+                })}
+          </div>
+          <div className="see-more-home mt-4 d-flex justify-content-center">
+            <Link to={"/product"} className="btn-see-more">
+              Xem Thêm
+            </Link>
+          </div>
+        </div>
+
+        <div className="container-propose-spare-part mt-2 mt-sm-4 px-sm-4 py-sm-3 rounded-3">
+          {customerId ? <h3 className="title mb-4">Phụ tùng đề xuất</h3> : <h3 className="title mb-4">Phụ tùng đề xuất</h3>}
+          <div className="propose-spare-part mx-4">
+            {customerId && productRecommendations
+              ? productRecommendations?.slice(0, 8).map((e, index) => {
+                  return <CartItemsMainPage CartItems={e} key={index} />;
+                })
+              : allSpareParts &&
+                allSpareParts?.slice(0, 8).map((e, index) => {
+                  return <CartItemsMainPage CartItems={e} key={index} />;
+                })}
           </div>
         </div>
       </div>
 
-      <div className="home-footer">
+      <div className="home-footer mt-5">
         <Footer />
       </div>
     </div>
